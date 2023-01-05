@@ -1,3 +1,4 @@
+
 import Paciente from "./Paciente"
 
 const ListadoPacientes = ({pacientes, setPaciente}) => {
