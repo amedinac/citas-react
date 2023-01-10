@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Error from './Error';
 
-const Form = ({ pacientes, setPacientes, paciente }) => {
+const Form = ({ pacientes, setPacientes, paciente, setPaciente }) => {
 	const [ nombre, setNombre ] = useState('');
 	const [ propietario, setPropietario ] = useState('');
 	const [ email, setEmail ] = useState('');
@@ -36,7 +36,7 @@ const Form = ({ pacientes, setPacientes, paciente }) => {
 		}
 		setError(false);
 
-		const paciente = {
+		const objetoPaciente = {
 			nombre,
 			propietario,
 			email,
@@ -47,14 +47,21 @@ const Form = ({ pacientes, setPacientes, paciente }) => {
 
 
 		if(paciente.id){
-			console.log("Editando")
+			//Editando registro
+			objetoPaciente.id = paciente.id;
+			const pacientesEditados = pacientes.map(paciente => paciente.id === objetoPaciente.id ? objetoPaciente : paciente);
+			setPacientes(pacientesEditados);
+			setPaciente({});
+
 		}else{
-			console.log("Agregando")
+			//Nuevo Registro
+			objetoPaciente.id = generarId();
+			setPacientes([ ...pacientes, objetoPaciente ]);
 		}
 
 
 
-		setPacientes([ ...pacientes, paciente ]);
+		
 
 		//Reset Form
 		setNombre('');
